@@ -68,7 +68,7 @@ A maneira recomendada para executar o projeto é utilizando Docker, pois ele ger
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO>
+    git clone https://github.com/lucianosilvadevcode/pixspi.git
     cd pixspi
     ```
 
