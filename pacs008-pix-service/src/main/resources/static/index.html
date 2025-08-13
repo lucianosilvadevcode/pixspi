@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Pagamento PIX (pacs.008)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simulador de Geração de Mensagem PIX (pacs.008)</h1>
+        <p>Preencha os dados abaixo para gerar a mensagem XML de uma ordem de pagamento.</p>
+
+        <form id="payment-form">
+            <div class="form-section">
+                <h2>Dados do Pagador</h2>
+                <input type="text" id="payerName" placeholder="Nome do Pagador" value="Fulano de Tal" required>
+                <input type="text" id="payerCpfCnpj" placeholder="CPF/CNPJ do Pagador" value="11122233344" required>
+                <input type="text" id="payerIspb" placeholder="ISPB do Pagador" value="12345678" required>
+                <input type="text" id="payerAgency" placeholder="Agência do Pagador" value="0001" required>
+                <input type="text" id="payerAccount" placeholder="Conta do Pagador" value="123456" required>
+                <select id="payerAccountType">
+                    <option value="CACC" selected>Conta Corrente</option>
+                    <option value="SVGS">Conta Poupança</option>
+                    <option value="SLRY">Conta Salário</option>
+                </select>
+            </div>
+
+            <div class="form-section">
+                <h2>Dados do Recebedor</h2>
+                <input type="text" id="receiverName" placeholder="Nome do Recebedor" value="Ciclano Comércio LTDA" required>
+                <input type="text" id="receiverCpfCnpj" placeholder="CPF/CNPJ do Recebedor" value="11222333000144" required>
+                <input type="text" id="receiverIspb" placeholder="ISPB do Recebedor" value="87654321" required>
+                <input type="text" id="receiverAgency" placeholder="Agência do Recebedor" value="0001" required>
+                <input type="text" id="receiverAccount" placeholder="Conta do Recebedor" value="654321" required>
+                <input type="text" id="receiverPixKey" placeholder="Chave PIX do Recebedor" value="f4d8-e2c8-4a6c-b9b2" required>
+                <select id="receiverAccountType">
+                    <option value="CACC" selected>Conta Corrente</option>
+                    <option value="TRAN">Conta de Pagamento</option>
+                </select>
+            </div>
+            
+            <div class="form-section">
+                <h2>Dados da Transação</h2>
+                <input type="number" id="amount" placeholder="Valor (ex: 123.45)" step="0.01" value="99.50" required>
+                <input type="text" id="description" placeholder="Descrição do Pagamento" value="Pagamento do pedido #54321" required>
+            </div>
+
+            <button type="submit" id="submit-btn">Gerar Mensagem pacs.008</button>
+        </form>
+
+        <div id="result-container" class="hidden">
+            <h2>Mensagem XML Gerada</h2>
+            <pre><code id="xml-output"></code></pre>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
