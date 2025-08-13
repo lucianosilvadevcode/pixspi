@@ -69,7 +69,7 @@ A maneira recomendada para executar o projeto é utilizando Docker, pois ele ger
 1.  **Clone o repositório:**
     ```bash
     git clone <URL_DO_SEU_REPOSITORIO>
-    cd pacs008-pix-service
+    cd pixspi
     ```
 
 2.  **Construa a imagem e inicie o container:**
