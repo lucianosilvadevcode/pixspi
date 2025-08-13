@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Simulador de Geração de Mensagem PIX (pacs.008)</h1>
-        <p>Preencha os dados abaixo para gerar a mensagem XML de uma ordem de pagamento.</p>
+        <h1>Simulador de Geração e Envio de Mensagem PIX (pacs.008)</h1>
+        <p>Preencha os dados abaixo para gerar e simular o envio de uma ordem de pagamento.</p>
 
         <form id="payment-form">
             <div class="form-section">
@@ -25,7 +25,6 @@
                     <option value="SLRY">Conta Salário</option>
                 </select>
             </div>
-
             <div class="form-section">
                 <h2>Dados do Recebedor</h2>
                 <input type="text" id="receiverName" placeholder="Nome do Recebedor" value="Ciclano Comércio LTDA" required>
@@ -39,19 +38,20 @@
                     <option value="TRAN">Conta de Pagamento</option>
                 </select>
             </div>
-            
             <div class="form-section">
                 <h2>Dados da Transação</h2>
                 <input type="number" id="amount" placeholder="Valor (ex: 123.45)" step="0.01" value="99.50" required>
                 <input type="text" id="description" placeholder="Descrição do Pagamento" value="Pagamento do pedido #54321" required>
             </div>
 
-            <button type="submit" id="submit-btn">Gerar Mensagem pacs.008</button>
+            <button type="submit" id="generate-btn">Gerar Mensagem</button>
         </form>
 
         <div id="result-container" class="hidden">
             <h2>Mensagem XML Gerada</h2>
             <pre><code id="xml-output"></code></pre>
+            <button id="publish-btn" class="secondary-btn" disabled>Publicar Mensagem no SPI</button>
+            <div id="publish-status" class="status-box hidden"></div>
         </div>
     </div>
     <script src="script.js"></script>

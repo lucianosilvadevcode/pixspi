@@ -1,5 +1,5 @@
 
-# Gerador de Mensagem PIX (pacs.008)
+# Simulador de Geração de Mensagem PIX (pacs.008)
 
 ![Java](https://img.shields.io/badge/Java-21-blue.svg)![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.2-brightgreen.svg)![Maven](https://img.shields.io/badge/Maven-3.9-red.svg)![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)
 
@@ -30,7 +30,7 @@ A mensagem `pacs.008` (FI to FI Customer Credit Transfer) é o pilar para a inic
 ## Estrutura de Diretórios do Projeto
 
 ```
-pixspi/
+pacs008-pix-service/
 ├── .gitignore                # Arquivos e diretórios ignorados pelo Git.
 ├── Dockerfile                # Define como construir a imagem Docker da aplicação.
 ├── docker-compose.yml        # Orquestra a execução do container de forma simplificada.
@@ -68,8 +68,8 @@ A maneira recomendada para executar o projeto é utilizando Docker, pois ele ger
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/lucianosilvadevcode/pixspi.git
-    cd pixspi
+    git clone <URL_DO_SEU_REPOSITORIO>
+    cd pacs008-pix-service
     ```
 
 2.  **Construa a imagem e inicie o container:**
