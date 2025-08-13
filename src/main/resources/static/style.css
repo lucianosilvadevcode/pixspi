@@ -1,0 +1,14 @@
+/* (CSS para o arquivo style.css) */
+body { font-family: sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+.container { max-width: 900px; margin: auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+h1, h2 { color: #333; }
+h1 { text-align: center; margin-bottom: 20px; }
+h2 { border-bottom: 2px solid #00b9a5; padding-bottom: 5px; margin-top: 20px; }
+.form-section { margin-bottom: 20px; }
+input, select { width: calc(100% - 20px); padding: 10px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc; }
+button { width: 100%; padding: 15px; background-color: #00b9a5; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; transition: background-color 0.3s; }
+button:hover { background-color: #008a7c; }
+button:disabled { background-color: #ccc; cursor: not-allowed; }
+#result-container { margin-top: 30px; background-color: #2d2d2d; color: #f2f2f2; padding: 15px; border-radius: 4px; }
+pre { white-space: pre-wrap; word-wrap: break-word; }
+.hidden { display: none; }
