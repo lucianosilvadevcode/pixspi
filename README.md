@@ -64,15 +64,11 @@ pixspi/
 
 ## Configurando a Segurança (mTLS): Gerando os Arquivos `.jks`
 
-Os arquivos `keystore.jks` e `truststore.jks` são os pilares da segurança da conexão. Eles **não são gerados pela aplicação**, mas sim através de um processo formal de certificação digital. Eles funcionam como a identidade digital da sua instituição.
-
--   **`keystore.jks` (Seu Passaporte Digital):** Contém sua chave privada e seu certificado público. É usado para provar sua identidade ao servidor do SPI.
--   **`truststore.jks` (Sua Lista de Contatos Confiáveis):** Contém os certificados públicos da Autoridade Certificadora (CA) do Banco Central. É usado para verificar a identidade do servidor do SPI.
-
-Você precisará da ferramenta `keytool`, que é incluída em qualquer instalação do Java JDK.
+Os arquivos `keystore.jks` e `truststore.jks` são os pilares da segurança da conexão. Eles **não são gerados pela aplicação**, mas sim através de um processo formal de certificação digital. Você precisará da ferramenta `keytool`, que é incluída em qualquer instalação do Java JDK.
 
 ---
-### **Processo de Geração**
+### **I - O `keystore.jks` (Sua Identidade)**
+Contém sua chave privada e seu certificado público. É usado para provar sua identidade ao servidor do SPI.
 
 #### Passo 1: Gerar o Par de Chaves e o `keystore.jks`
 Este comando cria seu cofre inicial (`keystore.jks`) contendo um par de chaves (pública/privada) para sua instituição.
@@ -97,28 +93,35 @@ keytool -certreq -alias seu-psp-alias -file SEU_PSP.csr -keystore keystore.jks
 Este é um processo formal e externo:
 1.  Envie o arquivo `SEU_PSP.csr` para a Autoridade Certificadora homologada pelo Banco Central.
 2.  A CA validará a identidade da sua empresa.
-3.  Após a validação, a CA lhe devolverá seu **certificado público assinado** (ex: `seu_psp.cer`) e os **certificados da própria CA** (a cadeia de confiança).
+3.  Após a validação, a CA lhe devolverá seu **certificado público assinado** (ex: `seu_psp.cer`) e os **certificados da própria CA**.
 
 #### Passo 4: Importar os Certificados para o `keystore.jks`
-Agora, você importa os certificados recebidos para dentro do seu keystore, tornando-o oficialmente válido. Importe primeiro a cadeia da CA e, por último, o seu certificado.
-
+Importe a cadeia de certificados da CA e, por último, o seu próprio certificado assinado para dentro do `keystore.jks`.
 ```bash
-# Exemplo de importação da cadeia da CA
 keytool -importcert -alias ca_raiz -file ca_raiz.cer -keystore keystore.jks
 keytool -importcert -alias ca_intermediaria -file ca_intermediaria.cer -keystore keystore.jks
-
-# Importação do seu certificado assinado
 keytool -importcert -alias seu-psp-alias -file seu_psp.cer -keystore keystore.jks
 ```
 
-#### Passo 5: Criar o `truststore.jks`
-Este arquivo conterá apenas os certificados públicos da CA, que garantem a confiança no servidor do SPI.
+---
+### **II - O `truststore.jks` (Sua Lista de Confiança)**
+Contém os certificados públicos da Autoridade Certificadora do Banco Central. É usado para verificar a identidade do servidor do SPI. **Os arquivos `.cer` para este processo são fornecidos pelo Banco Central.**
+
+#### Passo 1: Criar o `truststore.jks` importando a CA Raiz
+Este comando cria o arquivo `truststore.jks` e adiciona o primeiro certificado da cadeia de confiança.
 
 ```bash
-keytool -importcert -alias ca_raiz_spi -file ca_raiz.cer -keystore truststore.jks
-keytool -importcert -alias ca_intermediaria_spi -file ca_intermediaria.cer -keystore truststore.jks
+keytool -importcert -alias ca_raiz_sfn -file AC_Raiz_SFN.cer -keystore truststore.jks
 ```
+-   Responda **"sim"** à pergunta "Confiar neste certificado?".
 -   Você será solicitado a criar uma senha para o truststore. **Guarde-a com segurança**, pois ela será a `ibm.mq.ssl.trust-store-password`.
+
+#### Passo 2: Importar os demais Certificados da Cadeia
+Adicione os certificados intermediários fornecidos pelo BCB ao mesmo arquivo.
+
+```bash
+keytool -importcert -alias ca_intermediaria_spi -file AC_Intermediaria_SPI_v1.cer -keystore truststore.jks
+```
 
 ---
 
