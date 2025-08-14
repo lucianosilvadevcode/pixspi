@@ -62,6 +62,34 @@ pixspi/
             └── application.properties
 ```
 
+### Descrição dos Arquivos do Projeto
+
+-   **`.gitignore`**: Define quais arquivos e diretórios devem ser ignorados pelo sistema de controle de versão Git (ex: arquivos de build, logs, configurações de IDE).
+-   **`Dockerfile`**: Contém as instruções para construir a imagem Docker da aplicação, empacotando o ambiente de execução e a aplicação em um container portátil.
+-   **`docker-compose.yml`**: Arquivo de configuração que simplifica a execução do container Docker, definindo o serviço, o mapeamento de portas e outras configurações de tempo de execução.
+-   **`pom.xml`**: O "Project Object Model" do Maven. Gerencia as dependências do projeto (bibliotecas), plugins e o processo de build da aplicação Java.
+
+-   **`src/main/java`**: Contém todo o código-fonte do backend em Java.
+    -   **`Pacs008Application.java`**: O ponto de entrada principal que inicializa a aplicação Spring Boot.
+    -   **`config/JmsConfig.java`**: Classe de configuração que cria e configura a conexão segura (mTLS) com o servidor IBM MQ, utilizando as credenciais e certificados definidos.
+    -   **`controller/Pacs008Controller.java`**: Expõe os endpoints da API REST (`/payments` e `/publish`) que a interface do usuário consome para gerar e enviar as mensagens.
+    -   **`dto/PaymentRequestDto.java`**: Objeto de Transferência de Dados (DTO) que mapeia os dados JSON recebidos do formulário de pagamento.
+    -   **`dto/PublishRequestDto.java`**: DTO que encapsula o conteúdo XML para ser enviado ao endpoint de publicação.
+    -   **`service/mq/MqClientService.java`**: Serviço que implementa a lógica de envio da mensagem para a fila do IBM MQ, utilizando o `JmsTemplate` do Spring.
+    -   **`service/Pacs008Service.java`**: Contém a lógica de negócio principal para construir o objeto da mensagem `pacs.008` a partir dos dados recebidos.
+    -   **`service/SignatureService.java`**: Serviço responsável por realizar a assinatura digital criptográfica no padrão `XMLDSig` sobre a mensagem XML gerada.
+
+-   **`src/main/resources`**: Contém todos os arquivos de configuração e recursos estáticos.
+    -   **`certs/keystore.jks`**: Arquivo Java KeyStore que armazena a chave privada e o certificado público da sua instituição, usado para provar sua identidade.
+    -   **`certs/truststore.jks`**: Arquivo Java KeyStore que armazena os certificados públicos das Autoridades Certificadoras confiáveis (do Banco Central), usado para verificar a identidade do servidor do SPI.
+    -   **`static/`**: Diretório para os arquivos do frontend.
+        -   **`index.html`**: A estrutura da página web que o usuário acessa.
+        -   **`script.js`**: A lógica JavaScript para capturar os dados do formulário, chamar a API do backend e exibir os resultados.
+        -   **`style.css`**: As regras de estilo para a aparência da página web.
+    -   **`xsd/pacs.008.spi.1.13.xsd`**: O arquivo de Schema XML oficial do `pacs.008`. É usado pelo plugin JAXB para gerar as classes Java correspondentes automaticamente.
+    -   **`application.properties`**: Arquivo de configuração principal do Spring Boot. Contém as configurações do servidor, os detalhes de conexão com o MQ e as senhas e alias dos keystores.
+
+
 ## Configurando a Segurança (mTLS): Gerando os Arquivos `.jks`
 
 Os arquivos `keystore.jks` e `truststore.jks` são os pilares da segurança da conexão. Eles **não são gerados pela aplicação**, mas sim através de um processo formal de certificação digital. Você precisará da ferramenta `keytool`, que é incluída em qualquer instalação do Java JDK.
