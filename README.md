@@ -139,7 +139,7 @@ Abra o arquivo `src/main/resources/application.properties` e **substitua todos o
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/lucianosilvadevcode/pixspi.git pixspi
+    git clone https://github.com/lucianosilvadevcode/pixspi.git
     cd pixspi
     ```
 
